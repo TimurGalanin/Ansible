@@ -1,0 +1,12 @@
+---
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: Collect facts
+    ansible.builtin.setup:
+
+  - name: Output all facts on host
+    debug:
+      var: hostvars[inventory_hostname]

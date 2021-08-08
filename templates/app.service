@@ -1,0 +1,13 @@
+[Unit]
+Description=gunicorn daemon
+#Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory={{ application_dir }}/back2
+ExecStart={{ application_dir }}/venv/bin/gunicorn  --workers 1 --bind 0.0.0.0:8888 my_app_module:my_web_app
+#путь до файла gunicorn в виртуальном окружении
+
+[Install]
+WantedBy=multi-user.target

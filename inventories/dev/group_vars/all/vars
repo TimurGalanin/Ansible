@@ -1,0 +1,25 @@
+test: 1
+
+package_list:
+  - python-pip-whl
+  - openjdk-8-jdk
+
+sonarqube_pass: sonar12345
+sonarqube_user: sonar
+sonarqube_db: sonar
+
+sonarqube_home: '/opt/sonarqube-9.0.0.45539'
+
+test_string: Hello
+
+test_list:
+  - item1
+  - item2
+
+test_user:
+  - Tom
+  - johnd
+  - Keni
+
+application_dir: /opt/ti
+application_url: https://github.com/RoboInterativo/back-front-example.git

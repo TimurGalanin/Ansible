@@ -1,0 +1,97 @@
+---
+- name: select
+  set_fact:
+    ip_addr_list: "{{ hostvars[inventory_hostname]['ansible_all_ipv4_addresses']  | list }}"
+    ip_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+
+- name: Debug
+  debug:
+    var: ip_addr
+
+- name: DebugDefauly
+  debug:
+    var:  ip_addr_list
+
+# - name: Download foo.conf
+#   get_url:
+#     url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.0.45539.zip
+#     dest: /opt/sonarqube.zip
+
+# - name: Update repositories cache and install  package
+#   apt:
+#     name:
+#       - mysql-client
+#       - mysql-server
+#       - python-pip
+#     update_cache: yes
+
+- shell: 'pip install pip -U'
+
+
+- name: pip
+  pip:
+    name:
+      - PyMySQL
+    virtualenv_python: python
+      # virtualenv: /opt/app/venv
+      # virtualenv_python: python3
+
+- name: Create a new database with name 'sonar'
+  mysql_db:
+    name: '{{ sonarqube_user }}'
+    state: present
+
+# - name: Simple select query to acme db
+#   community.mysql.mysql_query:
+#     login_db: sys
+#     query: SELECT is_read_committed_snapshot_on FROM databases  WHERE name = %s
+#     positional_args:
+#       - sonar
+- name: Create database user with password and all database privileges and 'WITH GRANT OPTION'
+  mysql_user:
+    name: sonar
+    password: '{{ sonarqube_pass }}'
+    priv: 'sonar.*:ALL,GRANT'
+    state: present
+
+- name: test
+  template:
+    src: sonar.properties
+    dest: '{{ sonarqube_home }}/conf/sonar.properties'
+
+- name: Create service service
+  template:
+    src: service.j2
+    dest: '/etc/systemd/system/sonar.service'
+    mode: 0644
+  notify:
+    - Reload systemd daemon
+
+- name: Make sure a service unit is running
+  systemd:
+    state: started
+    name: sonar
+
+  # - name: Gather systemd service facts
+  #   service_facts:
+  #
+  # - name: Ensure netflow-agentr service is Stop
+  #   raw: "sudo systemctl stop consul"
+  #   when: ansible_facts.services['consul.service'].state != "stopped"
+  #
+
+# - name: Simple select query to acme db
+#   community.mysql.mysql_query:
+#     login_db: sys
+#     query: "SELECT is_read_committed_snapshot_on FROM sys.databases WHERE name='sonar'"
+#   register: mysql_rez
+#
+# - name: Debug
+#   debug:
+#     var: mysql_rez
+
+# - name: Unarchive a file that needs to be downloaded (added in 2.0)
+#   unarchive:
+#     src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.0.45539.zip
+#     dest: /opt/
+#     remote_src: yes

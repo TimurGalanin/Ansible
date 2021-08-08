@@ -1,0 +1,9 @@
+
+  oc = {{ ansible_distribution }}
+  версия ос = {{ ansible_distribution_version}}
+ 
+ установленные пакеты:
+{% for item in ansible_facts.packages %}
+{{ item.name }} {{ item.arch }} {{ item.release }} {{ item.version }} 
+{% endfor %}
+

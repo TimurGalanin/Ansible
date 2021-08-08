@@ -1,0 +1,18 @@
+---
+  #этот плейбук делает пинг по вебу
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: ping
+    ping:
+
+
+  #этот плейбук делает пинг по всем группам серверов
+- name: ping
+  hosts: all
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: ping

@@ -1,0 +1,24 @@
+---
+- name: Debug
+  debug:
+    msg: Hello
+- name: Download foo.conf
+  get_url:
+    url: https://nodejs.org/dist/v14.17.2/node-v14.17.2-linux-x64.tar.xz
+    dest: /opt/nodejs.tar.xz
+    #mode: '0440'
+#- file:
+#    path: /opt/nodejs
+#    state: directory     
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: /opt/nodejs.tar.xz
+    dest: /opt
+    remote_src: yes
+- name: add  to path
+  lineinfile:
+    dest: '/root/.profile'
+    state: present
+    line: 'export PATH=$PATH:/opt/node-v14.17.2-linux-x64/bin'
+

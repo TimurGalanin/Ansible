@@ -1,0 +1,30 @@
+---
+
+
+- name: Delete Dir
+  file:
+    path: /opt/back-front-example
+    state: absent
+
+- name: Git checkout
+  git:
+    repo: https://github.com/RoboInterativo/back-front-example
+    dest: /opt/back-front-example
+
+- name: BUILD FRONT
+  shell: '. /root/.profile &&  cd /opt/back-front-example/front2 && npm install && npm run build'
+
+- name: Update static
+  copy:
+    src: /opt/back-front-example/front2/dist/main.js
+    dest: /opt/back-front-example/back2/static/main.js
+    remote_src: yes
+
+
+- name: Create service
+  template:
+    src: app.service
+    dest: /etc/systemd/system/app.service
+    mode: 0644
+  notify:
+    - Reload systemd daemon

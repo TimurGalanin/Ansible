@@ -1,0 +1,3 @@
+
+  oc = {{ ansible_distribution }}
+  версия ос = {{ ansible_distribution_version}}

@@ -1,0 +1,8 @@
+---
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: ping
+    ping:

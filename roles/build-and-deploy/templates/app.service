@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=root
+Group=root
+WorkingDirectory=/opt/back-front-example/back2
+
+ExecStart=/opt/venv/bin/gunicorn app:app -k aiohttp.worker.GunicornWebWorker -b 0.0.0.0:8080 --pid /run/gunicorn/pid
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

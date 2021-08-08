@@ -1,0 +1,2 @@
+ansible-playbook -vv -u root -i   inventories/dev/inventory   playbooks/task4/apach.yml 
+

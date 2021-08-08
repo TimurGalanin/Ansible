@@ -1,0 +1,54 @@
+---
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+    ansible.builtin.user:
+      name: "{{test_user[0]}}"
+
+
+  - name: Add the user 'Keni' with a specific uid and a primary group of 'admin'
+    ansible.builtin.user:
+      name: "{{test_user[1]}}"
+
+
+  - name: Add the user 'Tom' with a specific uid and a primary group of 'admin'
+    ansible.builtin.user:
+      name: "{{test_user[2]}}"
+
+
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /mydir
+      state: directory
+      mode: '0755'
+
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: test.txt
+      dest: '/mydir/{{test_user[0]}}_01.txt'
+      owner: "{{test_user[0]}}"
+      group: "{{test_user[0]}}"
+
+  - name: Set a hostname specifying strategy
+    ansible.builtin.hostname:
+      name: s-test-01
+
+  - name: disable service httpd
+    ansible.builtin.systemd:
+      name: httpd
+      enabled: no
+      daemon_reload: yes
+
+  - name: Copy a "sudoers" file on the remote machine for editing
+    ansible.builtin.copy:
+      src: /etc/ssh/sshd_config
+      dest: /etc/ssh/ssh_test_config
+      remote_src: yes
+  - lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin'
+      insertafter: '^#PermitRootLogin'
+      line: '#PermitRootLogin'

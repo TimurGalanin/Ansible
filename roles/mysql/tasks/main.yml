@@ -1,0 +1,37 @@
+---
+- name: Get OS type
+  debug:
+    var: ansible_facts.distribution
+
+# - name: Install a .deb package from the internet
+#   apt:
+#     deb: https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
+
+- name: Update repositories cache and install  package
+  apt:
+    name:
+      - mysql-client
+      - mysql-server
+    update_cache: yes
+
+
+- name: shell
+  shell: "mysqld --initialize-insecure"
+  ignore_errors: yes
+  register: mypass
+
+- debug:
+    var: mypass
+
+- name: Make sure a service unit is running
+  systemd:
+    state: started
+    name: mysql
+
+# - name: Stop service cron on debian, if running
+#   ansible.builtin.systemd:
+#     name: cron
+#     state: stopped
+
+
+#  when: ansible_facts.distribution=='Ubuntu'
