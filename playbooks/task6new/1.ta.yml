@@ -7,7 +7,7 @@
   tasks:
   - name: Distribution
     debug:
-      var: ansible_facts|to_json
+      var: ansible_facts
   - template:
      src: '../../templates/test.txt'
      dest: /tmp/test.txt
