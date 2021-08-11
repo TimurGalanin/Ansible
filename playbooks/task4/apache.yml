@@ -4,14 +4,14 @@
   #become: yes
   gather_facts: yes
   tasks:
-  - name: Install package with multiple repos disabled
+  - name: Install package with multiple repos disabled # подключить репозиторий
     yum:
       enablerepo: "epel"
 
   - name: Install apach
     yum:
       name: httpd
-      state: latest
+      state: latest  # последней версии
 
   - name: reboot
     reboot:
@@ -26,34 +26,35 @@
       pre_reboot_delay : 10
 
   - name: Populate service facts
-    service_facts:
+    service_facts: #cобирает факты о состоянии служ вышел ли из автозагруз
 
-  - name: Print service facts
+  - name: Print service facts  # вывести службы
     ansible.builtin.debug:
       var: ansible_facts.services['httpd.service']
       verbosity: 2
 
-  - name: Enable service httpd
+  - name: Enable service httpd  # включаем в автозагрузку
     ansible.builtin.systemd:
       name: httpd
       enabled: yes
       daemon_reload: yes
 
-  - name: Stop service cron on debian, if running
+  - name: Stop service cron on debian, if running # останавливаем
     ansible.builtin.systemd:
       name: httpd
       state: stopped
 
-  - name: Restart service cron on centos, in all cases, also issue daemon-reload to pick up config changes
-    ansible.builtin.systemd:
+  - name: start apach
+    ansible.builtin.systemd: #включаем
       state: started
       name: httpd
 
   - name: reboot
     reboot:
 
-  - name: Find all
+  - name: Find all #выводим все конфиг файлы апачи
     find:
       paths:
         - /etc/httpd/conf
         - /etc/httpd/conf.d
+        #проверить отоброжает ли вложенные папки или нет

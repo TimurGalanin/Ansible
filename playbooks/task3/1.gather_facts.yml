@@ -4,10 +4,11 @@
   #become: yes
   gather_facts: yes
   tasks:
+    #так же собираем и факты
   - name: Gather the package facts
     ansible.builtin.package_facts:
-      manager: auto
-
+      manager: auto  # yum apt автомотически определить
+    #выводим все установленные пакеты
   - name: Print the package facts
     ansible.builtin.debug:
       var: ansible_facts.packages

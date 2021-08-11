@@ -6,7 +6,7 @@
   tasks:
   - name: Populate service facts
     service_facts:
-
+# тоже самое только факты о sshd 
   - name: Print service facts
     ansible.builtin.debug:
       var: ansible_facts.services['sshd.service']

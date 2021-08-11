@@ -1,0 +1,10 @@
+---
+  #этот плейбук делает пинг по вебу
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: Distribution
+    debug:
+      var: ansible_facts

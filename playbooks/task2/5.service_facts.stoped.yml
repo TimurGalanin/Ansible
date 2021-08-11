@@ -6,6 +6,7 @@
   tasks:
   - name: Populate service facts
     service_facts:
+      #только остановленные
 
   - name: Print service facts only stopped
     debug:
@@ -13,3 +14,4 @@
       verbosity: 2
     when: ansible_facts.services [item].state== 'stopped'
     loop: "{{ ansible_facts.services | list }}"
+...

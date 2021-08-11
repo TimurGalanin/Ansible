@@ -1,0 +1,87 @@
+---
+
+- name: Test gather_facts
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: Collect facts
+    setup:
+
+  - name: consul_user_shell
+    shell: "mount |grep /dev/vd |awk '{print $5}'"
+    register: file_system
+
+
+  - name: Output disk information
+    debug:
+      var:  file_system.stdout
+
+  - name: Gather the package facts
+    package_facts:
+      manager: auto
+
+  - name: Populate service facts
+    service_facts:
+
+  - name: Print service facts
+    debug:
+      var: ansible_facts.services
+      verbosity: 2
+
+  - name: Print ansible_hostname
+    debug:
+      var: ansible_hostname
+
+  - name: register date
+    shell: date +'%d-%m-%Y'
+    register: date_for_file
+
+  - name: Time
+    debug:
+      var: date_for_file
+      verbosity: 2
+
+  - name: shell
+    shell: "mount |egrep -i /dev/[s,v]d |awk '{print $1,$5} '"
+    register: disk_and_fs
+
+  - name: shell register ssh__config
+    shell: 'grep "^[^#*/;]"  /etc/ssh/sshd_config'
+    register: sshd_config
+
+
+
+  - name: Create Report
+    template:
+      src: '../../templates/report.txt'
+      dest: '/tmp/{{ ansible_hostname }}_01_{{ date_for_file.stdout}}.txt'
+      # mode: 0644
+
+
+  - name: create directory
+    file:
+      path: /ansible/audit/linux_severs #?Тут опечатка в задании или так надо
+      state: directory
+      mode: 0777
+    delegate_to: localhost
+
+
+  - name: Fetch
+    fetch:
+      src: '/tmp/{{ ansible_hostname }}_01_{{ date_for_file.stdout}}.txt'
+      dest: '/ansible/audit/linux_severs/'
+      flat: yes
+
+
+
+  # - name: Output all facts on host
+  #   debug:
+  #     var: hostvars[inventory_hostname]
+  #         #.ansible_devices.keys() | list
+  #
+  # #
+  #  - name: Print service facts
+  #    debug:
+  #      var: ansible_facts
+  # #     verbosity: 2

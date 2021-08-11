@@ -1,0 +1,72 @@
+---
+- name: ping
+  hosts: web
+  #become: yes
+  #Добавление пользователей
+  gather_facts: yes
+  tasks:
+  - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+    ansible.builtin.user:
+      name: "{{item}}"
+    loop: "{{ test_user }}"
+#LOOP создать цикл для создание юзеров
+
+#Создание папки для копирования файла в корень
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /mydir
+      state: directory
+      mode: '0777' #cmhod -rv
+#Копируем в папку наш файл
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: '../../files/test.txt'
+      dest: '/mydir/{{test_user[0]}}_01.txt'
+      owner: "{{test_user[0]}}"
+      group: "{{test_user[0]}}"
+  #loop: "{{ test_user }}"    есди всем пользователям
+#Меняем хостнейм
+  - name: Set a hostname specifying strategy
+    ansible.builtin.hostname:
+      name: s-test-01
+
+#Убираем апач из автозагрузки
+  - name: disable service httpd
+    ansible.builtin.systemd:
+      name: httpd
+      enabled: no
+      daemon_reload: yes
+#Резервная копия конфига
+  - name: Copy
+    ansible.builtin.copy:
+      src: /etc/ssh/sshd_config
+      dest: /root/ssh_test_config
+      remote_src: yes
+
+#Создание папки для отчета локально
+  - name: create directory
+    file:
+      path: /ansible/audit/linux_severs
+      state: directory
+      mode: 0777
+    delegate_to: localhost
+
+#Забираем отчет по ssh
+  - name: ansible copy к себе
+    fetch:
+      src: /etc/ssh/sshd_config
+      dest: /ansible/audit/linux_severs/sshd_config
+      flat: yes #использовать абсалютный путь
+#Если нет строки PermitRootLogin yes добавить
+  - lineinfile:
+      path: /etc/ssh/sshd_config
+      #regexp: '^PermitRootLogin yes'
+      # insertafter: '^#PermitRootLogin'
+      line: 'PermitRootLogin yes'
+
+#Найти строку и закоментировать PermitRootLogin yes
+  - lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin yes'
+      # insertafter: '^#PermitRootLogin'
+      line: '#PermitRootLogin yes'

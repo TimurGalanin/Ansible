@@ -12,3 +12,4 @@
     ansible.builtin.debug:
       var: ansible_facts.packages['bash']
       verbosity: 2
+# какой версии bash

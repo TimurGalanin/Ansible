@@ -1,6 +1,16 @@
 ---
+  #только веб
 - name: ping
   hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: ping
+    ping:
+
+ #все сервера
+- name: ping
+  hosts: all
   #become: yes
   gather_facts: yes
   tasks:
