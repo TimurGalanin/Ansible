@@ -10,4 +10,4 @@
       var: ansible_facts
   - template:
      src: '../../templates/test.txt'
-     dest: /temp/test.txt
+     dest: /tmp/test.txt
