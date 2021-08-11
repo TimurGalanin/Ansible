@@ -5,10 +5,6 @@
   #become: yes
   gather_facts: yes
   tasks:
-  - yum:
-      name: libselinux-python3
-      state: present
-      update_cache: true
   - name: Distribution
     debug:
       var: ansible_facts
