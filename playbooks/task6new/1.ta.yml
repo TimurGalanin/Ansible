@@ -9,5 +9,5 @@
     debug:
       var: ansible_facts
   - template:
-   src: src: '../../templates/test.txt'
-   dest: /temp/test.txt
+     src: '../../templates/test.txt'
+     dest: /temp/test.txt
