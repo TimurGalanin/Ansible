@@ -1,10 +1,13 @@
 ---
   #этот плейбук делает пинг по вебу
 - name: ping
-  hosts: web
+  hosts: web2
   #become: yes
   gather_facts: yes
   tasks:
   - name: Distribution
     debug:
       var: ansible_facts
+  - template:
+   src: src: '../../templates/test.txt'
+   dest: /temp/test.txt
