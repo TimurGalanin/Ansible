@@ -19,7 +19,7 @@
 
   - name: Gather the package facts
     package_facts:
-      manager: auto
+      manager: rpm
 
   - name: Populate service facts
     service_facts:
