@@ -1,6 +1,6 @@
 
 ---
-- hosts: web
+- hosts: web2
   gather_facts: yes
   tasks:
     - name: Collect facts

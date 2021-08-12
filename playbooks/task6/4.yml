@@ -1,6 +1,6 @@
 
 ---
-- hosts: web
+- hosts: web2
   vars_prompt:
 
     - name: cmd1
