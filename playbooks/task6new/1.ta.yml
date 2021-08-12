@@ -10,6 +10,6 @@
       var: ansible_facts
   - shell: mount |grep /dev/vd |awk '{print $5}'
     register: file_system
-  - template:
+  - template: 
      src: '../../templates/test.txt'
      dest: /tmp/test.txt
