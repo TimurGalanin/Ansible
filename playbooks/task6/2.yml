@@ -46,7 +46,7 @@
     shell: "mount |egrep -i /dev/[s,v]d |awk '{print $1,$5} '"
     register: disk_and_fs
 
-  - name: shell register ssh__config
+  - name: shell register ssh__config 
     shell: 'grep "^[^#*/;]"  /etc/ssh/sshd_config'
     register: sshd_config
 

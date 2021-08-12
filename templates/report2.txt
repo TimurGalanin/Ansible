@@ -1,0 +1,3 @@
+
+{{ cmd1 }} {{ result1.stdout}}
+{{ cmd2 }} {{ result2.stdout}}

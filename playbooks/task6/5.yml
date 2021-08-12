@@ -1,0 +1,32 @@
+
+---
+- hosts: web
+  gather_facts: yes
+  tasks:
+    - name: Collect facts
+      setup:
+
+    - name: shell
+      shell: date +'%d-%m-%Y'
+      register: date_for_file
+
+    - name: Create Report
+      template:
+        src: '../../templates/report3.txt'
+        dest: '/tmp/{{ ansible_hostname }}_03_{{ date_for_file.stdout}}.json'
+        # mode: 0644
+
+
+    - name: create directory
+      file:
+        path: /ansible/audit/linux_severs #?Тут опечатка в задании или так надо
+        state: directory
+        mode: 0777
+      delegate_to: localhost
+
+
+    - name: Fetch
+      fetch:
+        src: '/tmp/{{ ansible_hostname }}_03_{{ date_for_file.stdout}}.json'
+        dest: '/ansible/audit/linux_severs/'
+        flat: yes
