@@ -1,3 +1,0 @@
-ansible_facts |to_json
-{{ansible_facts.services}}
-тип файловой системы {{file_system.stdout}}

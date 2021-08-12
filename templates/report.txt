@@ -1,4 +1,3 @@
-
 Операционная система: {{ ansible_distribution }} {{ ansible_distribution_version}}
 Диски и файловые системы:
 {{ disk_and_fs.stdout}}
