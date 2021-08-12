@@ -13,12 +13,7 @@ name: {{ ansible_facts.packages[item ][0].name  }}, arch: {{ ansible_facts.packa
 
 Selinux:
 
-status:       ansible_selinux.status
-mode:         ansible_selinux.mode
-config_mode:  ansible_selinux.config_mode
-type:         ansible_selinux.type 
-policyvers:   ansible_selinux.config_mode
-
+{{ selinux_status.stdout }}
 sshd_config:
 {{ sshd_config.stdout}}
 

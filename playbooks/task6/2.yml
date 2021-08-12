@@ -12,6 +12,9 @@
     shell: "mount |grep /dev/vd |awk '{print $5}'"
     register: file_system
 
+  - name: consul_user_shell
+    shell: sestatus
+    register: selinux_status
 
   - name: Output disk information
     debug:
@@ -50,14 +53,11 @@
     shell: 'grep "^[^#*/;]"  /etc/ssh/sshd_config'
     register: sshd_config
 
-
-
   - name: Create Report
     template:
       src: '../../templates/report.txt'
       dest: '/tmp/{{ ansible_hostname }}_01_{{ date_for_file.stdout}}.txt'
       # mode: 0644
-
 
   - name: create directory
     file:
@@ -65,7 +65,6 @@
       state: directory
       mode: 0777
     delegate_to: localhost
-
 
   - name: Fetch
     fetch:
