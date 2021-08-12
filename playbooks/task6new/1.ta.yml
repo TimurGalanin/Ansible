@@ -10,6 +10,16 @@
       var: ansible_facts
   - shell: mount |grep /dev/vd |awk '{print $5}'
     register: file_system
-  - template: 
+  gather_facts: yes
+  tasks:
+    #собирает факты
+  - name: Populate service facts
+    service_facts:
+# выводит факты
+  - name: Print service facts
+    ansible.builtin.debug:
+      var: ansible_facts.services
+      verbosity: 2
+  - template:
      src: '../../templates/test.txt'
      dest: /tmp/test.txt
