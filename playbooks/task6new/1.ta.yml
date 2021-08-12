@@ -10,8 +10,6 @@
       var: ansible_facts
   - shell: mount |grep /dev/vd |awk '{print $5}'
     register: file_system
-  gather_facts: yes
-  tasks:
     #собирает факты
   - name: Populate service facts
     service_facts:
