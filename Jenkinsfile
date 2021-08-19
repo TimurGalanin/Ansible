@@ -3,7 +3,7 @@ pipeline {
        parameters {
                string(
           			name: 'CODE_REPO',
-          			defaultValue: 'git@github.com:TimurGalanin/Ansible.git',
+          			defaultValue: 'git@github.com/TimurGalanin/Ansible.git',
           			description: 'CODE_REPO'
 		            )
 		 string(
@@ -28,7 +28,7 @@ script {
                                        doGenerateSubmoduleConfigurations: false,
                                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']],
                                        gitTool: 'Default',
-                                       submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'alex', url: 'ssh://git@github.com:TimurGalanin/Ansible.git']]])
+                                       submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'alex', url: 'ssh://git@github.com/TimurGalanin/Ansible.git']]])
 
 
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
