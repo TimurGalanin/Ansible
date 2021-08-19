@@ -30,7 +30,7 @@ script {
                                        gitTool: 'Default',
                                        submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'sshkey', url: 'ssh://git@github.com/TimurGalanin/Ansible.git']]])
 
-
+                         sh 'pwd && ls -li ci'
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
 
                          ansiblePlaybook extras: "-vv --extra-vars \"inventory_dir=\"${WORKSPACE}/ci/Ansible/inventories/dev/\"\" ",
