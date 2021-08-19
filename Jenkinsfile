@@ -28,7 +28,7 @@ script {
                                        doGenerateSubmoduleConfigurations: false,
                                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']],
                                        gitTool: 'Default',
-                                       submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'ssh-git', url: 'ssh://git@github.com:TimurGalanin/Ansible.git']]])
+                                       submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'alex', url: 'ssh://git@github.com:TimurGalanin/Ansible.git']]])
 
 
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
