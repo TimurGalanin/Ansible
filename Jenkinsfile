@@ -23,8 +23,12 @@ pipeline {
 script {
 
 
-                         checkout([$class: 'GitSCM', branches: [[name: "master"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'shilo-av-ssh', url: "ssh://git@github.com:TimurGalanin/Ansible.git"]]])
-
+                         //checkout([$class: 'GitSCM', branches: [[name: "master"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'shilo-av-ssh', url: "ssh://git@github.com:TimurGalanin/Ansible.git"]]])
+                         checkout([$class: 'GitSCM', branches: [[name: 'main']],
+                                       doGenerateSubmoduleConfigurations: false,
+                                       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']],
+                                       gitTool: 'Default',
+                                       submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'ssh-git', url: 'ssh://git@github.com:TimurGalanin/Ansible.git']]])
 
 
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
