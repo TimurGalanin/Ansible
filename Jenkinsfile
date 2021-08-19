@@ -35,15 +35,12 @@ pipeline {
                          playbook: "ci/Ansible/playbooks/task1/dev.yml"
             }
         }
-        stage('Stage 2') {
-            steps {
-            }
-          }
     }
     post {
         success {
 
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'code/front2/dist/*.zip', fingerprint: true
+            sh "echo hello"
+          //  archiveArtifacts allowEmptyArchive: true, artifacts: 'code/front2/dist/*.zip', fingerprint: true
 
         }
       }
