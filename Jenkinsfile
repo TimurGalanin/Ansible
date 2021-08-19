@@ -33,7 +33,7 @@ script {
                          sh 'pwd && ls -li ci'
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
 
-                         ansiblePlaybook extras: "-vv --extra-vars \"inventory_dir=\"${WORKSPACE}/ci/inventories/dev/\"\" ",
+                         ansiblePlaybook extras: "-vv -u root --extra-vars \"inventory_dir=\"${WORKSPACE}/ci/inventories/dev/\"\" ",
                          installation: 'ansible29',
                          inventory: "ci/inventories/dev/inventory",
                          playbook: "ci/playbooks/task1/dev.yml"
