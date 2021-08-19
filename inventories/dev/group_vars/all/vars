@@ -21,5 +21,10 @@ test_user:
   - johnd
   - Keni
 
+new_user:
+  - Timur
+  - Oleg
+  - Tim
+
 application_dir: /opt/ti
 application_url: https://github.com/RoboInterativo/back-front-example.git

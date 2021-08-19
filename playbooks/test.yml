@@ -1,0 +1,8 @@
+---
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: test_ansible
+    shell: echo hello ansible

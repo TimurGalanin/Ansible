@@ -1,0 +1,47 @@
+---
+- name: ping
+  hosts: web
+  #become: yes
+  gather_facts: yes
+  tasks:
+  - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+    ansible.builtin.user:
+      name: "{{item}}"
+    loop: "{{ new_user }}"
+
+  - name: Run a command as nobody
+    command: whoami
+    become: true
+    become_method: su
+    become_user: '{{ item}}'
+    loop: "{{ new_user }}"
+    register: rezult_whoami
+
+
+  - name: Run a command as nobody
+    command: hostname
+    become: true
+    become_method: su
+    become_user: '{{ item}}'
+    loop: "{{ new_user }}"
+    register: rezult_hostname
+
+  - name: Run a command as nobody
+    command: uptime
+    become: true
+    become_method: su
+    become_user: '{{ item}}'
+    loop: "{{ new_user }}"
+    register: rezult_uptime
+
+  - name: Debug1
+    debug:
+      var: rezult_whoami
+
+  - name: Debug2
+    debug:
+      var: rezult_hostname
+
+  - name: Debu3
+    debug:
+      var: rezult_uptime
