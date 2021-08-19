@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-
+script {
 
 
                          checkout([$class: 'GitSCM', branches: [[name: "master"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'shilo-av-ssh', url: "ssh://git@github.com:TimurGalanin/Ansible.git"]]])
@@ -33,6 +33,7 @@ pipeline {
                          installation: 'ansible29',
                          inventory: "ci/Ansible/inventories/dev/inventory",
                          playbook: "ci/Ansible/playbooks/task1/dev.yml"
+                       }
             }
         }
     }
