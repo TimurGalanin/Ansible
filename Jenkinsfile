@@ -36,7 +36,7 @@ script {
                          ansiblePlaybook extras: "-vv -u root --extra-vars \"inventory_dir=\"${WORKSPACE}/ci/inventories/dev/\"\" ",
                          installation: 'ansible29',
                          inventory: "ci/inventories/dev/inventory",
-                         playbook: "ci/playbooks/task1/dev.yml"
+                         playbook: "ci/playbooks/task2/1.gather_facts.yml"
                        }
             }
         }
