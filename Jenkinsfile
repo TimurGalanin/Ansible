@@ -43,7 +43,7 @@ script {
     }
     post {
         success {
-
+            sh "ifconfig"
             sh "echo hello"
           //  archiveArtifacts allowEmptyArchive: true, artifacts: 'code/front2/dist/*.zip', fingerprint: true
 
