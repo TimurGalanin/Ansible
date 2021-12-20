@@ -24,11 +24,11 @@ script {
 
 
                          //checkout([$class: 'GitSCM', branches: [[name: "master"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'shilo-av-ssh', url: "ssh://git@github.com:TimurGalanin/Ansible.git"]]])
-    //                     checkout([$class: 'GitSCM', branches: [[name: 'main']],
-                                      //  doGenerateSubmoduleConfigurations: false,
-                                      //  extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']],
-                                      //  gitTool: 'Default',
-                                      //  submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'sshkey', url: 'ssh://git@github.com/TimurGalanin/Ansible.git']]])
+                         checkout([$class: 'GitSCM', branches: [[name: 'main']],
+                                       doGenerateSubmoduleConfigurations: false,
+                                       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ci/']],
+                                       gitTool: 'Default',
+                                       submoduleCfg: [],  userRemoteConfigs: [[credentialsId: 'galanin_git_ssh', url: 'ssh://git@github.com/TimurGalanin/Ansible.git']]])
 
                          sh 'pwd && ls -li ci'
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
