@@ -36,7 +36,7 @@ script {
                          sh 'pwd && ls -li ci'
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
                          withCredentials([string(credentialsId: 'galanin-ssh', variable: 'VAULTSECRET')]) {
-                           sh "echo \"${VAULTSECRET}\"| base64 -d > ./.ansible_vault_file"
+                           sh "echo ${VAULTSECRET} | base64 -d > ./.ansible_vault_file"
                            sh 'chmod 600 ./.ansible_vault_file'
                          }
 
