@@ -35,8 +35,9 @@ script {
 
                          sh 'pwd && ls -li ci'
                          DEPLOY_TYPE = 'BUILDONOPENSHIFT4'
+                         withCredentials([string(credentialsId: 'galanin-ssh', variable: 'VAULTSECRET')]) { sh "echo \"${VAULTSECRET}\" > ./.ansible_vault_file" }
 
-                         ansiblePlaybook extras: "-vvvv -u root --extra-vars \" SSH_PASS=${SSH_PASS}  inventory_dir=\"${WORKSPACE}/ci/inventories/dev/\"\" ",
+                         ansiblePlaybook extras: "--private-key ./.ansible_vault_file -vv -u root --extra-vars \" inventory_dir=\"${WORKSPACE}/ci/inventories/dev/\"\" ",
                          installation: 'ansible29',
                          inventory: "ci/inventories/dev/inventory",
                          playbook: "ci/playbooks/task1/dev.yml"
